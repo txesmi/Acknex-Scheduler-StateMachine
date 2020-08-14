@@ -15,7 +15,7 @@ The basis is the SCHEDULER_ITEM data structure which saves each scheduled object
 
 The scheduler works over a static list of SCHEDULER_ITEM and loops through it calling every scheduled state function each frame. The list starts empty. The objects are added to the scheduler through 'schItemAdd' which adds a new SCHEDULER_ITEM to the list. The list items are deleted when their state function call returns NULL. The object can also be removed at the same time.
 
-It only need to include 'scheduler.h', set 'scheduler' function as 'on_frame' event and set 'schItemRemoveAll' as 'on_exit' event. You might, of course, call these functions differently. f.e: as a part of larger looping or closing functions.
+It only needs to include 'scheduler.h', set 'scheduler' function as 'on_frame' event, and set 'schItemRemoveAll' as 'on_exit' event. You might, of course, call these functions differently. f.e: as a part of larger looping or closing functions.
 
 	#include <acknex.h>
 	#include "scheduler.h"
@@ -60,7 +60,7 @@ The initialization remains in the action, but the loop content and the deletion 
 		schItemAdd(me, crazyRemove, crazyLoop);
 	}
 
-This setup will start by the action asociated to an entity in WED which creates a string, saves it into a skill, and includes the entity into the scheduler list with its removing and looping functions.
+This setup will start by the action associated to an entity in WED which creates a string, saves it into a skill, and includes the entity into the scheduler list with its removing and looping functions.
 
 The removing function removes the string created on initialization and the entity itself.
 
