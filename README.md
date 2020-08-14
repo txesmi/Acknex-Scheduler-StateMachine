@@ -1,6 +1,7 @@
+# Acknex Scheduler State Machine
 A simple object oriented function scheduler and state machine manager all in one.
 
-The basis is the SCHEDULER_ITEM data structure which saves each scheduled object data. 
+The basis is the SCHEDULER_ITEM data structure which saves each scheduled object data:
 
 	typedef struct SCHEDULER_ITEM
 	{
@@ -14,7 +15,7 @@ The basis is the SCHEDULER_ITEM data structure which saves each scheduled object
 
 The scheduler works over a static list of SCHEDULER_ITEM and loops through it calling every scheduled state function each frame. The list starts empty. The objects are added to the scheduler through 'schItemAdd' which adds a new SCHEDULER_ITEM to the list. The list items are deleted when their state function call returns NULL. The object can also be removed at the same time.
 
-You would only need to include 'scheduler.h', set 'scheduler' function as 'on_frame' event and set 'schItemRemoveAll' as 'on_exit' event. You might, of course, call these functions differently. f.e: as a part of larger looping or closing functions.
+It only need to include 'scheduler.h', set 'scheduler' function as 'on_frame' event and set 'schItemRemoveAll' as 'on_exit' event. You might, of course, call these functions differently. f.e: as a part of larger looping or closing functions.
 
 	#include <acknex.h>
 	#include "scheduler.h"
@@ -75,7 +76,7 @@ The return of the function must be a function (void* or NULL) and the parameter 
 
 You will need to call 'schItemRemoveAll' before level changes.
 
-All this function returning stuff might sound strange but it is mandatory because the scheduler function is running over the static array and it should not be modified by other functions while its execution, which executes every scheduled object function. That is why the looping function must return something in order to make the scheduler know that the list have to be shortened when removing an an object and modify the list localy inside the scheduler. Once it needs to take care of the return of the looping functions, it can return pointers to functions by the same prize, which results in an object oriented state machine manager. In the other hand, calling 'schItemAdd' from inside an scheduled function is totally safe.
+All this function returning stuff might sound strange but it is mandatory because the scheduler function is running over the static array and it should not be modified by other functions while its execution, which executes every scheduled object function. That is why the looping function must return something in order to make the scheduler know that the list have to be shortened when removing an object and modify the list locally inside the scheduler. Once it needs to take care of the return of the looping functions, it can return pointers to functions by the same prize, which results in an object oriented state machine manager. In the other hand, calling 'schItemAdd' from inside an scheduled function is totally safe.
 
 The returning function pointer is the function that will be called next frame. This way you can build each state as a separate function and control the execution flux by the return of the functions.
 
